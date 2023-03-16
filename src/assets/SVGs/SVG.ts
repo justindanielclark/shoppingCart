@@ -6,6 +6,9 @@ import shoppingCart from "./shoppingCart.svg";
 import plus from "./plus.svg";
 import minus from "./minus.svg";
 import hamburger from "./hamburger.svg";
+import star from "./star.svg";
+import halfstar from "./halfstar.svg";
+import dummy from "./dummy.svg";
 
 export default {
   home,
@@ -16,4 +19,7 @@ export default {
   plus,
   minus,
   hamburger,
+  star,
+  halfstar,
+  dummy,
 };

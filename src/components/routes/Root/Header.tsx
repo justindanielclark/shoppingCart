@@ -7,18 +7,27 @@ const liClasses =
 const linkClasses = "flex flex-row items-center gap-1";
 
 type Props = {
-  className?: string;
+  handleMenuClick: () => void;
+  menuOpen: boolean;
 };
 
-function Header({ className }: Props) {
+function Header({ handleMenuClick, menuOpen }: Props) {
   return (
-    <header role={"heading"} className={className ? className : undefined}>
-      <div className="container flex md:flex-row flex-col justify-between mx-auto items-start md:items-center">
+    <header className="bg-gradient-to-b from-stone-900 to-neutral-800 text-white border-b-2 border-white">
+      <div className="flex md:flex-row flex-col justify-between mx-auto items-start md:items-center">
         <div className="flex flex-row justify-between w-full md:w-fit items-center">
-          <h1 className="font-bold text-3xl flex items-center h-16 ml-3 md:ml-0">
-            DummyJSONStore
-          </h1>
+          <div className="flex flex-row items-center">
+            <img
+              src={SVG.dummy}
+              alt="dummyIcon"
+              className="h-10 w-10 -scale-x-100"
+            />
+            <h1 className="font-bold text-2xl lg:text-3xl flex items-center h-16 ml-3 md:ml-0">
+              DummyJSONStore
+            </h1>
+          </div>
           <img
+            onClick={handleMenuClick}
             className="h-8 w-8 md:hidden mr-3"
             src={SVG.hamburger}
             alt="ExpandMenuIcon"
@@ -26,9 +35,15 @@ function Header({ className }: Props) {
             role={"button"}
           />
         </div>
-        <nav className="w-full md:w-fit">
+        <nav
+          className={`w-full md:w-fit ${
+            menuOpen ? "block" : "hidden md:block"
+          }`}
+        >
           <ul className="list-none flex md:flex-row flex-col md:gap-4 gap-0 text-xl justify-center items-center">
-            <li className={liClasses}>
+            <li
+              className={`${liClasses} border-t-2 border-white md:border-t-0`}
+            >
               <Link to={"/"} className={linkClasses}>
                 <img src={SVG.home} alt="Home Icon" className="h-4 w-4" />
                 Home

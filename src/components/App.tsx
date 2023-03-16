@@ -6,7 +6,8 @@ import {
 } from "react-router-dom";
 import Root from "./routes/Root/Root";
 import Category from "./routes/Category/Category";
-import CategoryData from "../types/FetchedData";
+import Product from "./routes/Product/Product";
+import { CategoryData, ProductData } from "../types/FetchedData";
 
 type Props = {};
 
@@ -35,12 +36,16 @@ function App({}: Props) {
             ).then((res) => res.json()),
         },
         {
-          path: "/product/:id",
-          element: <div>Individual Product Path</div>,
+          path: "/product/:productID",
+          element: <Product />,
+          loader: async ({ params }): Promise<ProductData> =>
+            fetch(`https://dummyjson.com/products/${params.productID}`).then(
+              (res) => res.json()
+            ),
         },
         {
           path: "/contact",
-          element: <div>Contact Us Path</div>,
+          element: <div className="flex-1">Contact Us Path</div>,
         },
       ],
     },

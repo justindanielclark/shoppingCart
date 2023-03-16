@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useLoaderData, useParams } from "react-router-dom";
-import CategoryData from "../../../types/FetchedData";
+import { CategoryData } from "../../../types/FetchedData";
 import ProductCard from "./ProductCard/ProductCard";
 import { categoryNameFormatter } from "../../../utils/categoryNameFormatter";
 
@@ -14,14 +14,14 @@ function Category({}: Props) {
   const { categoryID } = useParams();
   const categoryStr = categoryID ? categoryID : "";
   const categoryTitle = categoryNameFormatter(categoryStr);
-
-  console.log(data);
   return (
-    <div className="flex-1 overflow-y-scroll p-5">
+    <div className="flex-1 p-5 overflow-x-hidden">
       <h2 className="text-3xl">{categoryTitle}</h2>
-      <ul className="p-2 gap-4 grid grid-cols-1 lg:grid-cols-2">
+      <ul className="p-2 gap-4 grid grid-cols-categoryProductsGrid justify-center">
         {data.products.map((product, index) => (
           <ProductCard
+            category={product.category}
+            images={product.images}
             key={index}
             description={product.description}
             discountPercentage={product.discountPercentage}

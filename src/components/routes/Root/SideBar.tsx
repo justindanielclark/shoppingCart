@@ -5,14 +5,14 @@ import { sidebarCategoryNameFormatter } from "../../../utils/categoryNameFormatt
 
 type Props = {
   categories: Array<string>;
-  className?: string;
+  menuOpen: boolean;
 };
 type CategoryDetail = {
   path: string;
   text: string;
 };
 
-function SideBar({ categories, className }: Props) {
+function SideBar({ categories, menuOpen }: Props) {
   const subCategories: Array<Array<CategoryDetail>> = [
     [
       /*General*/
@@ -38,7 +38,11 @@ function SideBar({ categories, className }: Props) {
   });
 
   return (
-    <aside className={className ? className : undefined}>
+    <aside
+      className={`${
+        menuOpen ? "block" : "hidden md:block"
+      } z-50 h-full bg-gradient-to-b from-neutral-800 to-stone-900 text-white overflow-x-hidden absolute w-full md:w-fit md:relative md:top-auto`}
+    >
       <h2 className="flex text-2xl justify-center items-center gap-2 p-5">
         <img src={SVG.shoppingBag} alt={"Products Icon"} className="h-6 w-6" />
         Products
@@ -53,7 +57,7 @@ function SideBar({ categories, className }: Props) {
               </h3>
               <ul>
                 {subCategory.map((category, idx) => (
-                  <li className="text-lg">
+                  <li className="text-lg" key={idx}>
                     <NavLink
                       to={category.path}
                       className={({ isActive, isPending }) =>
