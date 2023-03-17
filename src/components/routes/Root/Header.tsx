@@ -16,7 +16,7 @@ function Header({ handleMenuClick, menuOpen }: Props) {
     <header className="bg-gradient-to-b from-stone-900 to-neutral-800 text-white border-b-2 border-white">
       <div className="flex md:flex-row flex-col justify-between mx-auto items-start md:items-center">
         <div className="flex flex-row justify-between w-full md:w-fit items-center">
-          <div className="flex flex-row items-center">
+          <div className="flex flex-row items-center pl-2">
             <img
               src={SVG.dummy}
               alt="dummyIcon"
@@ -36,7 +36,7 @@ function Header({ handleMenuClick, menuOpen }: Props) {
           />
         </div>
         <nav
-          className={`w-full md:w-fit ${
+          className={`w-full pr-2 md:w-fit ${
             menuOpen ? "block" : "hidden md:block"
           }`}
         >

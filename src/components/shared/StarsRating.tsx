@@ -6,9 +6,14 @@ type Props = {
 };
 
 function StarsRating({ rating }: Props) {
-  const modifiedRating = Math.ceil(rating * 2) / 2;
-  const numStars = Math.floor(modifiedRating);
-  const HalfStars = modifiedRating % 1;
+  let numStars = Math.floor(rating);
+  let HalfStars = 0;
+  const modRating = rating % 1;
+  if (modRating > 0.75) {
+    numStars++;
+  } else if (modRating > 0.35) {
+    HalfStars++;
+  }
   const starImages = [];
   for (let i = 0; i < numStars; i++) {
     starImages.push(<img className="w-4 h-4" src={SVGs.star} key={i} />);

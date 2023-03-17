@@ -11,15 +11,14 @@ function Root() {
   if (navigation.state === "loading" && menuOpen) {
     setMenuOpen(false);
   }
-  // console.log(navigation.state);
   const toggleMenu = (): void => {
     setMenuOpen((menuBool) => !menuBool);
   };
-
+  console.log(navigation.state);
   return (
     <>
       <Header handleMenuClick={toggleMenu} menuOpen={menuOpen} />
-      <div className=" bg-slate-700  text-white flex-1 flex md:flex-row flex-col-reverse flex-nowrap relative overflow-hidden">
+      <div className=" bg-gradient-to-b from-stone-900 to-neutral-800  text-white flex-1 flex md:flex-row flex-col-reverse flex-nowrap relative overflow-hidden">
         <Outlet />
         <SideBar categories={categories} menuOpen={menuOpen} />
       </div>

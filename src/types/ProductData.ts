@@ -1,4 +1,4 @@
-type ProductData = {
+interface ProductData {
   brand: string;
   category: string;
   description: string;
@@ -10,6 +10,6 @@ type ProductData = {
   stock: number;
   thumbnail: string;
   title: string;
-};
+}
 
 export default ProductData;

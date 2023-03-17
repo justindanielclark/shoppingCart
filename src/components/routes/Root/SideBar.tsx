@@ -62,9 +62,9 @@ function SideBar({ categories, menuOpen }: Props) {
                       to={category.path}
                       className={({ isActive, isPending }) =>
                         isPending
-                          ? "bg-stone-700 block px-2 rounded transition-colors duration-300"
-                          : isActive
                           ? "bg-neutral-700 block px-2 rounded transition-colors duration-300"
+                          : isActive
+                          ? "bg-yellow-700 block px-2 rounded transition-colors duration-300"
                           : "block px-2 transition-colors duration-300"
                       }
                     >
