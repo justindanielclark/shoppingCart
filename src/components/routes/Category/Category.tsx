@@ -15,8 +15,8 @@ function Category({}: Props) {
   const categoryStr = categoryID ? categoryID : "";
   const categoryTitle = categoryNameFormatter(categoryStr);
   return (
-    <div className="flex-1 p-5 overflow-x-hidden">
-      <h2 className="text-2xl font-bold underline text-yellow-400">
+    <div className="flex-1 overflow-x-hidden relative">
+      <h2 className="text-3xl font-bold underline text-yellow-400 sticky -top-0.5 w-full bg-neutral-900 p-2 z-50">
         {categoryTitle}
       </h2>
       <ul className="p-2 gap-4 grid grid-cols-categoryProductsGrid justify-center">

@@ -48,7 +48,7 @@ function SideBar({ categories, menuOpen }: Props) {
         Products
       </h2>
 
-      <ul className="grid grid-cols-3 md:grid-cols-1">
+      <ul className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-1">
         {subCategories.map((subCategory, index) => {
           return (
             <li key={index}>
@@ -57,7 +57,10 @@ function SideBar({ categories, menuOpen }: Props) {
               </h3>
               <ul>
                 {subCategory.map((category, idx) => (
-                  <li className="text-lg" key={idx}>
+                  <li
+                    className="sm:text-lg odd:bg-neutral-800 text-md"
+                    key={idx}
+                  >
                     <NavLink
                       to={category.path}
                       className={({ isActive, isPending }) =>

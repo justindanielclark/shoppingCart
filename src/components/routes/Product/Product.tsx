@@ -36,7 +36,7 @@ function Product() {
   } = data;
   return (
     <div className="flex-1 overflow-x-hidden flex justify-center items-center h-full">
-      <div className="bg-neutral-300 flex flex-col text-black rounded-lg max-h-full overflow-hidden-x-hidden max-w-xl">
+      <div className="bg-neutral-300 flex flex-col text-black rounded-lg max-h-full overflow-hidden-x-hidden max-w-xl border-2 border-yellow-400">
         {/* HEADING */}
         <div className="bg-yellow-400 w-full text-neutral-900 py-1 flex-initial rounded-t-lg">
           <div className="flex flex-row leading-none justify-between">
@@ -61,9 +61,10 @@ function Product() {
                 backgroundRepeat: "no-repeat",
               }}
             ></div>
-            <div className="w-16 md:w-full flex md:flex-row flex-col justify-around bg-yellow-400 md:h-16">
+            <div className="w-8 md:w-full flex md:flex-row flex-col justify-around bg-neutral-800 md:h-16">
               {images.map((img, index) => (
                 <div
+                  key={index}
                   className="p-2 rounded"
                   onMouseEnter={() => {
                     if (shownImage !== index) {

@@ -18,10 +18,10 @@ function ProductCard({
   images,
 }: ProductData) {
   return (
-    <section className="bg-yellow-400 text-black rounded-lg grid grid-cols-productCardGrid shadow-zinc-900 shadow-md overflow-hidden">
+    <section className="bg-yellow-400 text-black flex flex-col sm:flex-row rounded-lg shadow-zinc-900 shadow-md overflow-hidden">
       {/* IMAGE */}
       <div
-        className="relative bg-neutral-200"
+        className="relative bg-neutral-200 h-full basis-52 grow-0 shrink"
         style={{
           backgroundImage: `url(${images[0]})`,
           backgroundPosition: "center",
@@ -36,7 +36,7 @@ function ProductCard({
         ) : undefined}
       </div>
       {/* PRODUCT DATA AND BUTTONS */}
-      <div className="flex flex-col justify-between">
+      <div className="flex flex-col justify-between flex-1">
         <div className="">
           <h3 className="font-bold text-lg p-1">{`${capitalizeAll(title)}`}</h3>
           <p className="font-bold text-right text-sm px-1">{`(${capitalizeAll(
