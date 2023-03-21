@@ -15,12 +15,6 @@ import ErrorPage from "./shared/ErrorPage";
 type Props = {};
 
 function App({}: Props) {
-  // useEffect(() => {
-  //   fetch("https://dummyjson.com/products")
-  //     .then((res) => res.json())
-  //     .then(console.log);
-  // }, []);
-
   const router = createBrowserRouter([
     {
       path: "/",
