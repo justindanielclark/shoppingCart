@@ -7,7 +7,7 @@ export default function useCart(
   sortingFunc: sortTypes = "title"
 ) {
   const initialStateArr = initialState.map((item) => item);
-  sortCartProductData(initialStateArr, sortingFunc);
+  sortCartProductData(initialStateArr, sortingFunc, false);
   const [cart, setCart] = useState<Array<CartProductData>>(initialStateArr);
   const [sortFunc, setSortFunc] = useState<sortTypes>(sortingFunc);
   const [reversed, setReversed] = useState<boolean>(false);
@@ -24,7 +24,7 @@ export default function useCart(
     if (!found) {
       newCart.push({ ...product, quantity: 1 });
     }
-    sortCartProductData(newCart, sortFunc);
+    sortCartProductData(newCart, sortFunc, reversed);
     setCart(newCart);
   };
   const reduceItemQuantityInCart = (product: ProductData) => {
@@ -40,14 +40,14 @@ export default function useCart(
       }
       return prev;
     }, [] as Array<CartProductData>);
-    sortCartProductData(newCart, sortFunc);
+    sortCartProductData(newCart, sortFunc, reversed);
     setCart(newCart);
   };
   const deleteItemFromCart = (product: ProductData) => {
     const newCart = cart.filter((item) => {
       return item.id !== product.id;
     });
-    sortCartProductData(newCart, sortFunc);
+    sortCartProductData(newCart, sortFunc, reversed);
     setCart(newCart);
   };
   const resetCart = () => {
@@ -56,11 +56,21 @@ export default function useCart(
   const changeSortingFunc = (sortFuncType: sortTypes) => {
     setSortFunc(sortFuncType);
     const newCart = cart.map((item) => item);
-    sortCartProductData(newCart, sortFuncType);
+    sortCartProductData(newCart, sortFuncType, reversed);
+    setCart(newCart);
+  };
+  const toggleAscendingSort = () => {
+    const newSorting = !reversed;
+    setReversed((x) => !x);
+    const newCart = cart.map((item) => item);
+    sortCartProductData(newCart, sortFunc, newSorting);
     setCart(newCart);
   };
 
   return {
+    reversed,
+    toggleAscendingSort,
+    sortFunc,
     cart,
     reduceItemQuantityInCart,
     addItemQuantityInCart,
