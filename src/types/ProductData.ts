@@ -12,4 +12,9 @@ interface ProductData {
   title: string;
 }
 
+interface CartProductData extends ProductData {
+  quantity: number;
+}
+
 export default ProductData;
+export type { ProductData, CartProductData };

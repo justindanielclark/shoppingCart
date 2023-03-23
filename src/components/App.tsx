@@ -8,6 +8,7 @@ import Root from "./routes/Root/Root";
 import Home from "./routes/Home/Home";
 import Category from "./routes/Category/Category";
 import Product from "./routes/Product/Product";
+
 import ProductsInCategoryData from "../types/ProductsInCategoryData";
 import ProductData from "../types/ProductData";
 import ErrorPage from "./shared/ErrorPage";
