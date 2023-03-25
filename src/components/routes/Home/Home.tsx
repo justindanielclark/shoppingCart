@@ -94,9 +94,9 @@ function Home() {
               </p>
               <p className="text-black bg-yellow-200 rounded p-2 mt-4 mr-4 ml-16 text-sm sm:text-lg xl:text-xl">
                 I can't say I have the same problem. I've been using
-                DummyJSONStore for years now and it's just the best. They have
-                give you the prices on the original manufactor's price as well
-                as whatever their active discount is, all in an easy to navigate
+                DummyJSONStore for years now and it's just the best. They give
+                you the prices on the original manufactor's price as well as
+                whatever their active discount is, all in an easy to navigate
                 site!
               </p>
               <p className="text-black bg-yellow-400 rounded p-2 mt-4 ml-4 mr-16 text-sm sm:text-lg xl:text-xl">

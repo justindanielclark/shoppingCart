@@ -1,20 +1,49 @@
 import React, { useState } from "react";
-import { Outlet, useNavigation } from "react-router-dom";
-import SVG from "../../../assets/SVGs/SVG";
+import { Outlet, useNavigation, useLoaderData } from "react-router-dom";
 import Header from "./Header";
 import SideBar from "./SideBar";
-import categories from "../../../data/categories";
+import useLocalStorage from "../../../utils/useLocalStorage";
+import dateWithinTime from "../../../utils/datesWithinTime";
+import cacheTimeout from "../../../env/cacheTimeout";
+
+const _localstorage = useLocalStorage();
+
+async function rootLoader() {
+  const _lsCategories = _localstorage.getCategories();
+  if (_lsCategories) {
+    const { fetched, ...data } = _lsCategories;
+    if (dateWithinTime(fetched, new Date(), cacheTimeout)) {
+      return Promise.resolve(data.categories);
+    }
+  }
+  return fetch("https://dummyjson.com/products/categories")
+    .then((res) => {
+      if (res.status !== 200) {
+        throwErr();
+      }
+      return res.json();
+    })
+    .then((data) => {
+      _localstorage.setCategories(data, new Date());
+      return Promise.resolve(data);
+    });
+  function throwErr() {
+    throw new Error(
+      "Sorry, Something Has Gone Wrong. Unable to Product Category Info From Server"
+    );
+  }
+}
 
 function Root() {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const navigation = useNavigation();
+  const categories = useLoaderData() as string[];
   if (navigation.state === "loading" && menuOpen) {
     setMenuOpen(false);
   }
   const toggleMenu = (): void => {
     setMenuOpen((menuBool) => !menuBool);
   };
-  console.log(navigation.state);
   return (
     <>
       <Header handleMenuClick={toggleMenu} menuOpen={menuOpen} />
@@ -26,4 +55,5 @@ function Root() {
   );
 }
 
+export { rootLoader };
 export default Root;

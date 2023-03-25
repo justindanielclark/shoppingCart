@@ -154,7 +154,6 @@ describe("Can Act on Cart State", () => {
       const playstationIndex = result.current.cart.findIndex(
         (item) => item.title === "Playstation"
       );
-      console.log(playstationIndex);
       result.current.reduceItemQuantityInCart(
         result.current.cart[playstationIndex]
       );

@@ -1,14 +1,9 @@
-import React, { useState, useEffect } from "react";
-import {
-  BrowserRouter,
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
-import Root from "./routes/Root/Root";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Root, { rootLoader } from "./routes/Root/Root";
 import Home from "./routes/Home/Home";
 import Category from "./routes/Category/Category";
-import Product from "./routes/Product/Product";
-
+import Product, { productLoader } from "./routes/Product/Product";
+import useCart from "../utils/useCart";
 import ProductsInCategoryData from "../types/ProductsInCategoryData";
 import ProductData from "../types/ProductData";
 import ErrorPage from "./shared/ErrorPage";
@@ -16,10 +11,12 @@ import ErrorPage from "./shared/ErrorPage";
 type Props = {};
 
 function App({}: Props) {
+  const cart = useCart();
   const router = createBrowserRouter([
     {
       path: "/",
       element: <Root />,
+      loader: rootLoader,
       children: [
         {
           path: "/",
@@ -38,13 +35,10 @@ function App({}: Props) {
         },
         {
           path: "/product/:productID",
-          element: <Product />,
-          loader: async ({ params }): Promise<ProductData> =>
-            fetch(`https://dummyjson.com/products/${params.productID}`).then(
-              (res) => res.json()
-            ),
+          element: <Product addItemHandler={cart.addItemQuantityInCart} />,
+          loader: productLoader,
           errorElement: (
-            <ErrorPage message="Unfortunately, No Such Product Exists" />
+            <ErrorPage message="Unfortunately, we were unable to load a product at that URL" />
           ),
         },
         {
