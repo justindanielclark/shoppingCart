@@ -2,19 +2,33 @@ import { useState } from "react";
 import { ProductData, CartProductData } from "../types/ProductData";
 import sortCartProductData, { sortTypes } from "./sortCartProductData";
 
+export type Cart = Array<CartProductData>;
+
+export type UseCart = {
+  reversed: boolean;
+  sortFunc: sortTypes;
+  cart: Cart;
+  toggleAscendingSort: () => void;
+  reduceItemQuantityInCart: (product: ProductData) => void;
+  addItemQuantityInCart: (product: ProductData) => void;
+  deleteItemFromCart: (product: ProductData) => void;
+  resetCart: () => void;
+  changeSortingFunc: (sortFuncType: sortTypes) => void;
+};
+
 export default function useCart(
-  initialState: Array<CartProductData> = [],
+  initialState: Cart = [],
   sortingFunc: sortTypes = "title"
-) {
+): UseCart {
   const initialStateArr = initialState.map((item) => item);
   sortCartProductData(initialStateArr, sortingFunc, false);
-  const [cart, setCart] = useState<Array<CartProductData>>(initialStateArr);
+  const [cart, setCart] = useState<Cart>(initialStateArr);
   const [sortFunc, setSortFunc] = useState<sortTypes>(sortingFunc);
   const [reversed, setReversed] = useState<boolean>(false);
 
   const addItemQuantityInCart = (product: ProductData) => {
     let found = false;
-    const newCart: Array<CartProductData> = cart.map((item) => {
+    const newCart: Cart = cart.map((item) => {
       if (item.id === product.id) {
         found = true;
         return { ...item, quantity: item.quantity + 1 };
@@ -28,7 +42,7 @@ export default function useCart(
     setCart(newCart);
   };
   const reduceItemQuantityInCart = (product: ProductData) => {
-    const newCart: Array<CartProductData> = cart.reduce((prev, cur) => {
+    const newCart: Cart = cart.reduce((prev, cur) => {
       if (cur.id === product.id) {
         if (cur.quantity === 1) {
           return prev;
@@ -39,7 +53,7 @@ export default function useCart(
         prev.push(cur);
       }
       return prev;
-    }, [] as Array<CartProductData>);
+    }, [] as Cart);
     sortCartProductData(newCart, sortFunc, reversed);
     setCart(newCart);
   };

@@ -1,21 +1,20 @@
+import { useRef } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Root, { rootLoader } from "./routes/Root/Root";
 import Home from "./routes/Home/Home";
-import Category from "./routes/Category/Category";
+import Root, { rootLoader } from "./routes/Root/Root";
+import Category, { categoryLoader } from "./routes/Category/Category";
 import Product, { productLoader } from "./routes/Product/Product";
+import Cart from "./routes/Cart/Cart";
 import useCart from "../utils/useCart";
-import ProductsInCategoryData from "../types/ProductsInCategoryData";
-import ProductData from "../types/ProductData";
 import ErrorPage from "./shared/ErrorPage";
 
-type Props = {};
-
-function App({}: Props) {
+function App() {
+  const scrollPos = useRef({ pos: undefined, route: undefined });
   const cart = useCart();
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Root />,
+      element: <Root cart={cart.cart} />,
       loader: rootLoader,
       children: [
         {
@@ -23,14 +22,20 @@ function App({}: Props) {
           element: <Home />,
         },
         {
+          path: "/cart",
+          element: <Cart cart={cart} scrollPos={scrollPos} />,
+        },
+        {
           path: "/category/:categoryID",
-          element: <Category />,
-          loader: async ({ params }): Promise<ProductsInCategoryData> =>
-            fetch(
-              `https://dummyjson.com/products/category/${params.categoryID}`
-            ).then((res) => res.json()),
+          element: (
+            <Category
+              addItemHandler={cart.addItemQuantityInCart}
+              scrollPos={scrollPos}
+            />
+          ),
+          loader: categoryLoader,
           errorElement: (
-            <ErrorPage message="Unfortunately, No Such Category Exists" />
+            <ErrorPage message="Unfortunately, we are unable to load a category of products of that name at this time" />
           ),
         },
         {

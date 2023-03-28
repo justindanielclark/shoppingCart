@@ -19,15 +19,6 @@ const _localstorage = useLocalStorage();
 type Props = {
   addItemHandler: (data: ProductData) => void;
 };
-interface ProductLoaderFunctionArgs extends LoaderFunctionArgs {
-  params: {
-    productID: string;
-  };
-}
-
-interface FetchedProductData extends ProductData {
-  message?: string;
-}
 
 async function productLoader({ params }: LoaderFunctionArgs) {
   if (params.productID) {
@@ -44,25 +35,20 @@ async function productLoader({ params }: LoaderFunctionArgs) {
     return fetch(`https://dummyjson.com/products/${params.productID}`)
       .then((res) => {
         if (res.status !== 200) {
-          throwErr();
+          throw new Error();
         }
         return res.json();
       })
       .then((data) => {
         const { message, ...productData } = data;
         if (message) {
-          throwErr();
+          throw new Error();
         }
         _localstorage.setProduct(productData, new Date());
         return Promise.resolve(productData);
       });
   }
-  throwErr();
-  function throwErr() {
-    throw new Error(
-      "Sorry, Something Has Gone Wrong. Unable to Retrieve Valid Data From The Server"
-    );
-  }
+  throw new Error();
 }
 
 function Product({ addItemHandler }: Props) {

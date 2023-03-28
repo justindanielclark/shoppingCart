@@ -1,12 +1,22 @@
 import React, { useState } from "react";
-import { Outlet, useNavigation, useLoaderData } from "react-router-dom";
+import {
+  Outlet,
+  useNavigation,
+  useLoaderData,
+  useLocation,
+} from "react-router-dom";
 import Header from "./Header";
 import SideBar from "./SideBar";
 import useLocalStorage from "../../../utils/useLocalStorage";
 import dateWithinTime from "../../../utils/datesWithinTime";
 import cacheTimeout from "../../../env/cacheTimeout";
+import { Cart } from "../../../utils/useCart";
 
 const _localstorage = useLocalStorage();
+
+type Props = {
+  cart: Cart;
+};
 
 async function rootLoader() {
   const _lsCategories = _localstorage.getCategories();
@@ -34,19 +44,21 @@ async function rootLoader() {
   }
 }
 
-function Root() {
+function Root({ cart }: Props) {
+  const location = useLocation();
+  const [lastLoc, setLoc] = useState<string>(location.pathname);
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
-  const navigation = useNavigation();
   const categories = useLoaderData() as string[];
-  if (navigation.state === "loading" && menuOpen) {
+  if (lastLoc !== location.pathname && menuOpen) {
     setMenuOpen(false);
   }
   const toggleMenu = (): void => {
+    setLoc(location.pathname);
     setMenuOpen((menuBool) => !menuBool);
   };
   return (
     <>
-      <Header handleMenuClick={toggleMenu} menuOpen={menuOpen} />
+      <Header handleMenuClick={toggleMenu} menuOpen={menuOpen} cart={cart} />
       <div className=" bg-gradient-to-b from-stone-900 to-neutral-800  text-white flex-1 flex md:flex-row flex-col-reverse flex-nowrap relative overflow-hidden">
         <Outlet />
         <SideBar categories={categories} menuOpen={menuOpen} />
