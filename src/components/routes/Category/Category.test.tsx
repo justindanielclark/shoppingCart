@@ -7,6 +7,8 @@ import fakeProducts from "../../../data/products";
 import { enableFetchMocks } from "jest-fetch-mock";
 
 enableFetchMocks();
+const mockScrollPos = { current: { pos: undefined, route: undefined } };
+const mockFunction = jest.fn();
 
 const setupWithRouter = () => {
   const testMemoryRouter = createMemoryRouter(
@@ -17,7 +19,9 @@ const setupWithRouter = () => {
       },
       {
         path: "/category/:categoryID",
-        element: <Category />,
+        element: (
+          <Category addItemHandler={mockFunction} scrollPos={mockScrollPos} />
+        ),
         loader: ({ params }) => {
           return {
             ...fakeProducts,

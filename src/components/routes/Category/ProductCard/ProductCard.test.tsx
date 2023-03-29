@@ -3,7 +3,8 @@ import "@testing-library/jest-dom";
 import ProductCard from "./ProductCard";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-
+const mockScrollPos = { current: { pos: undefined, route: undefined } };
+const mockFunction = jest.fn();
 const fakeProduct = {
   id: 1,
   title: "iPhone 9",
@@ -25,5 +26,5 @@ const fakeProduct = {
 };
 
 test("It properly displays each product data field required", async () => {
-  render(<ProductCard {...fakeProduct} />);
+  render(<ProductCard product={fakeProduct} addItemHandler={mockFunction} />);
 });
