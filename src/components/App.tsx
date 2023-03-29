@@ -4,6 +4,7 @@ import Home from "./routes/Home/Home";
 import Root, { rootLoader } from "./routes/Root/Root";
 import Category, { categoryLoader } from "./routes/Category/Category";
 import Product, { productLoader } from "./routes/Product/Product";
+import ContactUs from "./routes/ContactUs/ContactUs";
 import Cart from "./routes/Cart/Cart";
 import useCart from "../utils/useCart";
 import ErrorPage from "./shared/ErrorPage";
@@ -48,7 +49,7 @@ function App() {
         },
         {
           path: "/contact",
-          element: <div className="flex-1">Contact Us Path</div>,
+          element: <ContactUs />,
         },
         {
           path: "/:errorRoute",

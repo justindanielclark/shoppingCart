@@ -9,8 +9,10 @@ import hamburger from "./hamburger.svg";
 import star from "./star.svg";
 import halfstar from "./halfstar.svg";
 import dummy from "./dummy.svg";
+import close from "./close.svg";
 
 export default {
+  close,
   home,
   phone,
   search,
