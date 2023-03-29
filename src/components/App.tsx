@@ -38,6 +38,7 @@ function App() {
           errorElement: (
             <ErrorPage message="Unfortunately, we are unable to load a category of products of that name at this time" />
           ),
+          shouldRevalidate: () => true,
         },
         {
           path: "/product/:productID",
